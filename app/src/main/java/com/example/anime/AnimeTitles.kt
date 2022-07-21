@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class AnimeTitles : AppCompatActivity() {
 
     lateinit var anime_api:AnimeAPI
-    lateinit var anime_list:Call<List<String>>
+    lateinit var anime_list:Call<MutableList<String>>
     lateinit var recyclerViewAnime: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,19 +26,22 @@ class AnimeTitles : AppCompatActivity() {
         recyclerViewAnime=findViewById(R.id.anime_titles_rv)
 
         anime_list=anime_api.getAnime()
-        anime_list.enqueue(object: Callback<List<String>>{
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-//                Log.d("onResponse",response.body().toString())
-//                Toast.makeText(applicationContext,response.body().toString(),Toast.LENGTH_SHORT).show()
+        anime_list.enqueue(object: Callback<MutableList<String>>{
+            override fun onResponse(call: Call<MutableList<String>>, response: Response<MutableList<String>>) {
 
-//                val sizeOfResponse= response.body()?.size
-              //  Toast.makeText(applicationContext, sizeOfResponse.toString(), Toast.LENGTH_SHORT).show()
-                  recyclerViewAnime.adapter= response.body()?.let { AnimeAdapter(it.toList()) }
+               val animeList= response.body()?.sorted()?.toMutableList()
+                animeList?.removeAt(0)
+
+                try {
+                    recyclerViewAnime.adapter=AnimeAdapter(animeList!!)
+                }catch (e:Exception){
+                    Toast.makeText(applicationContext, "Something went wrong make.", Toast.LENGTH_SHORT).show()
+                }
 
             }
 
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-               //code to be executed onFailure
+            override fun onFailure(call: Call<MutableList<String>>, t: Throwable) {
+                Toast.makeText(this@AnimeTitles, "Make sure you have active Internet Connection!", Toast.LENGTH_SHORT).show()
             }
 
         })

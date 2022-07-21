@@ -6,6 +6,6 @@ import retrofit2.http.GET
 interface AnimeAPI {
 
     @GET("anime")
-    fun getAnime(): Call<List<String>>
+    fun getAnime(): Call<MutableList<String>>
 
 }
