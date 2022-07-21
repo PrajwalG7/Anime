@@ -45,8 +45,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="404dp"
-        android:layout_height="433dp"
+        android:layout_width="match_parent"
+        android:layout_height="436dp"
         android:background="@drawable/home_shape"
         app:layout_constraintBottom_toTopOf="@+id/button_start"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,9 +54,11 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <TextView
-        android:layout_width="350dp"
-        android:layout_height="76dp"
+        android:id="@+id/slogan"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/itim"
         android:gravity="center"
         android:text="One place to get your favourite Anime Quotes"
@@ -64,29 +66,27 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:layout_constraintVertical_bias="0.383" />
+        app:layout_constraintVertical_bias="0.295" />
 
     <Button
         android:id="@+id/button_start"
         android:layout_width="237dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="312dp"
         android:backgroundTint="@color/splashshade"
         android:fontFamily="@font/itim"
-        android:textStyle="bold"
+        android:onClick="getStarted"
         android:text="Get started"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:layout_constraintVertical_bias="0.68"
-        android:onClick="getStarted"/>
+        app:layout_constraintVertical_bias="0.369" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

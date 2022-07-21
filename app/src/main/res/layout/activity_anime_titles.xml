@@ -27,10 +27,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="11dp"
+            android:fontFamily="@font/itim"
             android:text="Anime"
             android:textColor="@color/splashshade"
             android:textSize="20sp"
-            android:fontFamily="@font/itim"
             android:textStyle="bold" />
 
         <ImageView
@@ -48,14 +48,27 @@
         android:id="@+id/choose_anime_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:fontFamily="@font/itim"
         android:text="Choose your favorite anime "
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
+
+    <SearchView
+        android:id="@+id/search_anime"
+        android:theme="@style/BaseTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/anime_titles_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toEndOf="@+id/choose_anime_title"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/anime_titles_rv"
