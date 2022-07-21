@@ -1,24 +1,39 @@
 package com.example.anime
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Typeface
+import android.graphics.fonts.Font
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
+
 
 class AnimeTitles : AppCompatActivity() {
 
     lateinit var anime_api:AnimeAPI
     lateinit var anime_list:Call<MutableList<String>>
     lateinit var recyclerViewAnime: RecyclerView
+    lateinit var searchView: SearchView
+    lateinit var textViewChoose: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anime_titles)
+        searchView=findViewById(R.id.search_anime)
+
+        val typeface = ResourcesCompat.getFont(this.applicationContext, R.font.itim)
+        searchView.setTypeFace(typeface)
+
+        textViewChoose=findViewById(R.id.choose_anime_title)
+
+        var animeList:MutableList<String>?=null
 
         anime_api = RetrofitHelper.getInstance()
             .create(AnimeAPI::class.java)
@@ -29,7 +44,7 @@ class AnimeTitles : AppCompatActivity() {
         anime_list.enqueue(object: Callback<MutableList<String>>{
             override fun onResponse(call: Call<MutableList<String>>, response: Response<MutableList<String>>) {
 
-               val animeList= response.body()?.sorted()?.toMutableList()
+               animeList= response.body()?.sorted()?.toMutableList()
                 animeList?.removeAt(0)
 
                 try {
@@ -46,8 +61,51 @@ class AnimeTitles : AppCompatActivity() {
 
         })
 
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+              return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                textViewChoose.visibility=View.INVISIBLE
+
+                if(newText!=""&& newText!=null) {
+                    for (i in animeList!!) {
+                        if (i.lowercase().contains(newText.lowercase())) {
+                            recyclerViewAnime.adapter = AnimeAdapter(listOf(i))
+                        }
+                    }
+                }else{
+                    try {
+                        recyclerViewAnime.adapter = AnimeAdapter(animeList!!)
+                    }catch (e:Exception){
+                        Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                return false
+            }
+
+        })
+
+        searchView.setOnCloseListener(object: SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                textViewChoose.visibility=View.VISIBLE
+                 return false
+            }
+
+        })
 
 
 
     }
+    fun SearchView.setTypeFace(typeface: Typeface?) {
+        val id = context.resources.getIdentifier("android:id/search_src_text", null, null)
+        val searchText = searchView.findViewById(id) as TextView
+        searchText.typeface = typeface
+    }
+
+
 }
