@@ -73,10 +73,14 @@ class AnimeTitles : AppCompatActivity() {
                 textViewChoose.visibility=View.INVISIBLE
 
                 if(newText!=""&& newText!=null) {
-                    for (i in animeList!!) {
-                        if (i.lowercase().contains(newText.lowercase())) {
-                            recyclerViewAnime.adapter = AnimeAdapter(listOf(i))
+                    try {
+                        for (i in animeList!!) {
+                            if (i.lowercase().contains(newText.lowercase())) {
+                                recyclerViewAnime.adapter = AnimeAdapter(listOf(i))
+                            }
                         }
+                    }catch (e:Exception){
+                        Toast.makeText(applicationContext, "Loading data...", Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     try {
