@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.anime">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,10 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anime">
         <activity
-            android:name=".AnimeTitles"
-            android:screenOrientation="sensorPortrait"
+            android:name=".AnimeCharacters"
             android:exported="false"
+            android:screenOrientation="sensorPortrait"
             android:theme="@style/splashScreenTheme"/>
+        <activity
+            android:name=".AnimeTitles"
+            android:exported="false"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/splashScreenTheme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -22,6 +28,7 @@
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
