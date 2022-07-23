@@ -1,13 +1,16 @@
 package com.example.anime
 
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class AnimeAdapter(private val animeList:  List<String> ) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>() {
+class AnimeAdapter(var mContext: Context, private val animeList:  List<String> ) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -21,7 +24,6 @@ class AnimeAdapter(private val animeList:  List<String> ) : RecyclerView.Adapter
 
         holder.animeTitle.text = animeList[position]
 
-
     }
 
 
@@ -30,9 +32,16 @@ class AnimeAdapter(private val animeList:  List<String> ) : RecyclerView.Adapter
     }
 
 
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val animeTitle= itemView.findViewById<TextView>(R.id.anime_titles)
+        init {
+            itemView.setOnClickListener {
+//                Toast.makeText(mContext, animeList[adapterPosition], Toast.LENGTH_SHORT).show()
+                mContext.startActivity(Intent(mContext,AnimeCharacters::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("anime",animeList[adapterPosition]))
+            }
+        }
 
     }
+
 }
