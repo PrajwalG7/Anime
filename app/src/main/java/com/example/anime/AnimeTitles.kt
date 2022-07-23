@@ -1,5 +1,6 @@
 package com.example.anime
 
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.fonts.Font
 import android.os.Bundle
@@ -48,9 +49,9 @@ class AnimeTitles : AppCompatActivity() {
                 animeList?.removeAt(0)
 
                 try {
-                    recyclerViewAnime.adapter=AnimeAdapter(animeList!!)
+                    recyclerViewAnime.adapter=AnimeAdapter(applicationContext,animeList!!)
                 }catch (e:Exception){
-                    Toast.makeText(applicationContext, "Something went wrong make.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Something went wrong.", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -76,7 +77,7 @@ class AnimeTitles : AppCompatActivity() {
                     try {
                         for (i in animeList!!) {
                             if (i.lowercase().contains(newText.lowercase())) {
-                                recyclerViewAnime.adapter = AnimeAdapter(listOf(i))
+                                recyclerViewAnime.adapter = AnimeAdapter(applicationContext,listOf(i))
                             }
                         }
                     }catch (e:Exception){
@@ -84,7 +85,7 @@ class AnimeTitles : AppCompatActivity() {
                     }
                 }else{
                     try {
-                        recyclerViewAnime.adapter = AnimeAdapter(animeList!!)
+                        recyclerViewAnime.adapter = AnimeAdapter(applicationContext,animeList!!)
                     }catch (e:Exception){
                         Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
                     }
