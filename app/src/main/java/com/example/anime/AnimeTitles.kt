@@ -1,8 +1,6 @@
 package com.example.anime
 
-import android.content.res.Resources
 import android.graphics.Typeface
-import android.graphics.fonts.Font
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
@@ -52,7 +50,6 @@ class AnimeTitles : AppCompatActivity() {
                 try {
                     recyclerViewAnime.adapter=AnimeAdapter(applicationContext,animeList!!)
                 }catch (e:Exception){
-                    Toast.makeText(applicationContext, "Something went wrong.", Toast.LENGTH_SHORT).show()
                 }
 
             }
