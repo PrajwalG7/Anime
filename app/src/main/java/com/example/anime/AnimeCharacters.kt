@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +29,7 @@ class AnimeCharacters : AppCompatActivity() {
     var anime:String=""
     var pageNo:Int=0
     var loadMoreData:Boolean=true
+    lateinit var progressBar:ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,7 @@ class AnimeCharacters : AppCompatActivity() {
         recyclerView=findViewById(R.id.anime_characters_rv)
         textView=findViewById(R.id.choose_anime_character)
         searchView=findViewById(R.id.search_anime)
+        progressBar=findViewById(R.id.progress_circular_character)
         val typeface = ResourcesCompat.getFont(this.applicationContext, R.font.itim)
         searchView.setTypeFace(typeface)
 
@@ -91,12 +94,14 @@ class AnimeCharacters : AppCompatActivity() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                pageNo++
                 if(loadMoreData) {
+                    pageNo++
                     if (!recyclerView.canScrollVertically(1)) {
+                        progressBar.visibility=View.VISIBLE
                         callEnqueue()
                     }
                 }
+
             }
         })
 
@@ -118,6 +123,7 @@ class AnimeCharacters : AppCompatActivity() {
             ) {
                 if(response.body()==null){
                     loadMoreData=false
+                    progressBar.visibility=View.GONE
                 }else {
                     val res = response.body()
                     for (i in res?.indices!!) {
