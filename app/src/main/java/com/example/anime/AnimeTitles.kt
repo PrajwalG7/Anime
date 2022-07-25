@@ -47,6 +47,7 @@ class AnimeTitles : AppCompatActivity() {
 
                animeList= response.body()?.sorted()?.toMutableList()
                 animeList?.removeAt(0)
+                animeList?.add("naruto")
 
                 try {
                     recyclerViewAnime.adapter=AnimeAdapter(applicationContext,animeList!!)
