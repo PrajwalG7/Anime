@@ -25,6 +25,9 @@ class AnimeCharacters : AppCompatActivity() {
     lateinit var anime_character_list:Call<MutableList<AnimeCharacterList>>
     val anime_character_page_list: MutableList<String> = mutableListOf()
     var anime_character_page_list_filtered: MutableList<String> = mutableListOf()
+    var anime:String=""
+    var pageNo:Int=0
+    var loadMoreData:Boolean=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,44 +40,14 @@ class AnimeCharacters : AppCompatActivity() {
         searchView.setTypeFace(typeface)
 
 
-        val anime: String? = intent.getStringExtra("anime")
+        anime = intent.getStringExtra("anime").toString()
         textView.text=anime
 
         anime_api = RetrofitHelper.getPaginationInstance()
             .create(AnimeAPI::class.java)
 
-        //surround with try catch
-        anime_character_list=anime_api.getCharacter(anime!!,0)
+        callEnqueue()
 
-        anime_character_list.enqueue(object: Callback<MutableList<AnimeCharacterList>>{
-            override fun onResponse(
-                call: Call<MutableList<AnimeCharacterList>>,
-                response: Response<MutableList<AnimeCharacterList>>
-            ) {
-
-                val res=response.body()
-                for (i in res?.indices!!){
-
-                        anime_character_page_list.add(res[i].character)
-
-                }
-                anime_character_page_list_filtered= LinkedHashSet(anime_character_page_list).toMutableList()
-                recyclerView.adapter=AnimeCharacterAdapter(applicationContext,anime_character_page_list_filtered)
-
-
-            }
-
-            override fun onFailure(call: Call<MutableList<AnimeCharacterList>>, t: Throwable) {
-                Toast.makeText(this@AnimeCharacters, "Make sure you have an active Internet Connection!", Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
-
-
-
-
-        //searchview
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -85,7 +58,23 @@ class AnimeCharacters : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 textView.visibility= View.INVISIBLE
-
+                if(newText!=""&& newText!=null) {
+                    try {
+                        for (i in anime_character_page_list) {
+                            if (i.lowercase().contains(newText.lowercase())) {
+                                recyclerView.adapter = AnimeAdapter(applicationContext,listOf(i))
+                            }
+                        }
+                    }catch (e:Exception){
+                        Toast.makeText(applicationContext, "Loading data...", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    try {
+                        recyclerView.adapter = AnimeAdapter(applicationContext,anime_character_page_list_filtered)
+                    }catch (e:Exception){
+                        Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 return false
             }
 
@@ -99,6 +88,20 @@ class AnimeCharacters : AppCompatActivity() {
 
         })
 
+
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                pageNo++
+                if(loadMoreData) {
+                    if (!recyclerView.canScrollVertically(1)) {
+                        callEnqueue()
+                    }
+                }
+            }
+        })
+
     }
 
     fun SearchView.setTypeFace(typeface: Typeface?) {
@@ -106,4 +109,40 @@ class AnimeCharacters : AppCompatActivity() {
         val searchText = searchView.findViewById(id) as TextView
         searchText.typeface = typeface
     }
+
+    fun callEnqueue(){
+        anime_character_list=anime_api.getCharacter(anime,pageNo)
+
+        anime_character_list.enqueue(object: Callback<MutableList<AnimeCharacterList>>{
+            override fun onResponse(
+                call: Call<MutableList<AnimeCharacterList>>,
+                response: Response<MutableList<AnimeCharacterList>>
+            ) {
+                if(response.body()==null){
+                    loadMoreData=false
+                }else {
+                    val res = response.body()
+                    for (i in res?.indices!!) {
+
+                        anime_character_page_list.add(res[i].character)
+
+                    }
+                    anime_character_page_list_filtered =
+                        LinkedHashSet(anime_character_page_list).toMutableList()
+                    recyclerView.adapter = AnimeCharacterAdapter(
+                        applicationContext,
+                        anime_character_page_list_filtered
+                    )
+
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<AnimeCharacterList>>, t: Throwable) {
+                Toast.makeText(this@AnimeCharacters, "Make sure you have an active Internet Connection!", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
 }
+
+// Todo : improve the behaviour of onScroll data loading
