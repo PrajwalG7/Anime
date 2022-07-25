@@ -58,7 +58,7 @@ class AnimeTitles : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<MutableList<String>>, t: Throwable) {
-                Toast.makeText(this@AnimeTitles, "Make sure you have active Internet Connection!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AnimeTitles, "Make sure you have an active Internet Connection!", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -82,13 +82,11 @@ class AnimeTitles : AppCompatActivity() {
                             }
                         }
                     }catch (e:Exception){
-                        Toast.makeText(applicationContext, "Loading data...", Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     try {
                         recyclerViewAnime.adapter = AnimeAdapter(applicationContext,animeList!!)
                     }catch (e:Exception){
-                        Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
                     }
                 }
                 return false

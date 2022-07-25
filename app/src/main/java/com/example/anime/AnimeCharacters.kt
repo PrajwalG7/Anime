@@ -66,13 +66,11 @@ class AnimeCharacters : AppCompatActivity() {
                             }
                         }
                     }catch (e:Exception){
-                        Toast.makeText(applicationContext, "Loading data...", Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     try {
                         recyclerView.adapter = AnimeAdapter(applicationContext,anime_character_page_list_filtered)
                     }catch (e:Exception){
-                        Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
                     }
                 }
                 return false
@@ -144,5 +142,3 @@ class AnimeCharacters : AppCompatActivity() {
         })
     }
 }
-
-// Todo : improve the behaviour of onScroll data loading
