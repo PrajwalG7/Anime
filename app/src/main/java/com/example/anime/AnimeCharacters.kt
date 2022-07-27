@@ -65,14 +65,14 @@ class AnimeCharacters : AppCompatActivity() {
                     try {
                         for (i in anime_character_page_list) {
                             if (i.lowercase().contains(newText.lowercase())) {
-                                recyclerView.adapter = AnimeAdapter(applicationContext,listOf(i))
+                                recyclerView.adapter = AnimeCharacterAdapter(applicationContext,listOf(i),anime)
                             }
                         }
                     }catch (e:Exception){
                     }
                 }else{
                     try {
-                        recyclerView.adapter = AnimeAdapter(applicationContext,anime_character_page_list_filtered)
+                        recyclerView.adapter = AnimeCharacterAdapter(applicationContext,anime_character_page_list_filtered,anime)
                     }catch (e:Exception){
                     }
                 }
@@ -135,7 +135,8 @@ class AnimeCharacters : AppCompatActivity() {
                         LinkedHashSet(anime_character_page_list).toMutableList()
                     recyclerView.adapter = AnimeCharacterAdapter(
                         applicationContext,
-                        anime_character_page_list_filtered
+                        anime_character_page_list_filtered,
+                        anime
                     )
 
                 }
