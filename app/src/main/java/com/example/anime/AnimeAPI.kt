@@ -12,4 +12,6 @@ interface AnimeAPI {
     @GET("anime")
     fun getCharacter(@Query("title")title:String,@Query("page")pageNo:Int): Call<MutableList<AnimeCharacterList>>
 
+    @GET("character")
+    fun getCharacterQuote(@Query("name")title:String,@Query("page")pageNo:Int): Call<MutableList<AnimeCharacterList>>
 }
