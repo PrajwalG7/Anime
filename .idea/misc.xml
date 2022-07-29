@@ -11,10 +11,13 @@
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1235" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/drawable/ic_logo.xml" value="0.1" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/drawable/splash_image.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/activity_anime_character_quote.xml" value="0.184375" />
+        <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/activity_anime_character_quotes.xml" value="0.22" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/activity_anime_characters.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/activity_anime_titles.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/anime_characters_card.xml" value="0.22" />
+        <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/anime_quotes_card.xml" value="0.22" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/layout/anime_titles_card.xml" value="0.184375" />
         <entry key="..\:/Users/Aryan/AndroidStudioProjects/Anime/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.112" />
       </map>
