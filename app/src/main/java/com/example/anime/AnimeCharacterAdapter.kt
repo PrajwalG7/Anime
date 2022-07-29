@@ -37,7 +37,6 @@ class AnimeCharacterAdapter(var mContext: Context, private val animeList:  List<
         val animeTitle= itemView.findViewById<TextView>(R.id.anime_titles)
         init {
             itemView.setOnClickListener {
-               Toast.makeText(mContext, animeList[adapterPosition], Toast.LENGTH_SHORT).show()
                 mContext.startActivity(Intent(mContext,AnimeCharacterQuotes::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("anime_character",animeList[adapterPosition]).putExtra("anime",anime))
             }
         }
