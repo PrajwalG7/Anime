@@ -110,7 +110,7 @@ class AnimeCharacterQuotes : AppCompatActivity() {
 
 
     fun SearchView.setTypeFace(typeface: Typeface?) {
-        val id = context.resources.getIdentifier("android:id/search_src_text", null, null)
+        val id = context.resources.getIdentifier("android:id/search_src_text",  null, null)
         val searchText = searchView.findViewById(id) as TextView
         searchText.typeface = typeface
     }
