@@ -42,7 +42,7 @@ class AnimeCharacterQuotes : AppCompatActivity() {
         searchView.setTypeFace(typeface)
 
         anime = intent.getStringExtra("anime").toString()
-        anime_character=intent.getStringExtra("anime_character").toString()
+        anime_character= intent.getStringExtra("anime_character").toString()
         textView.text=anime
 
         anime_api = RetrofitHelper.getPaginationInstance()
@@ -65,14 +65,14 @@ class AnimeCharacterQuotes : AppCompatActivity() {
                     try {
                         for (i in anime_character_page_list) {
                             if (i.lowercase().contains(newText.lowercase())) {
-                                recyclerView.adapter = AnimeCharacterQuotesAdapter(applicationContext,listOf(i),anime)
+                                recyclerView.adapter = AnimeCharacterQuotesAdapter(applicationContext,listOf(i),anime,anime_character)
                             }
                         }
                     }catch (e:Exception){
                     }
                 }else{
                     try {
-                        recyclerView.adapter = AnimeCharacterQuotesAdapter(applicationContext,anime_character_page_list_filtered,anime)
+                        recyclerView.adapter = AnimeCharacterQuotesAdapter(applicationContext,anime_character_page_list_filtered,anime,anime_character)
                     }catch (e:Exception){
                     }
                 }
@@ -139,7 +139,8 @@ class AnimeCharacterQuotes : AppCompatActivity() {
                     recyclerView.adapter = AnimeCharacterQuotesAdapter(
                         applicationContext,
                         anime_character_page_list_filtered,
-                        anime
+                        anime,
+                        anime_character
                     )
 
                 }
