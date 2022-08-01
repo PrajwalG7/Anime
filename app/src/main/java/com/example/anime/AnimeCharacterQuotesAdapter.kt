@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class AnimeCharacterQuotesAdapter(var mContext: Context, private val animeList:  List<String>,var anime:String ) : RecyclerView.Adapter<AnimeCharacterQuotesAdapter.ViewHolder>() {
+class AnimeCharacterQuotesAdapter(var mContext: Context, private val animeList:  List<String>,var anime:String ,var anime_character:String) : RecyclerView.Adapter<AnimeCharacterQuotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -22,7 +22,7 @@ class AnimeCharacterQuotesAdapter(var mContext: Context, private val animeList: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.animeTitle.text = animeList[position]
-
+        holder.animeCharacter.append(anime_character)
     }
 
 
@@ -34,6 +34,7 @@ class AnimeCharacterQuotesAdapter(var mContext: Context, private val animeList: 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val animeTitle= itemView.findViewById<TextView>(R.id.anime_titles)
+        val animeCharacter= itemView.findViewById<TextView>(R.id.anime_character)
 //        init {
 //            itemView.setOnClickListener {
 //                Toast.makeText(mContext, animeList[adapterPosition], Toast.LENGTH_SHORT).show()
