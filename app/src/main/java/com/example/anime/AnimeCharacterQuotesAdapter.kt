@@ -54,8 +54,7 @@ class AnimeCharacterQuotesAdapter(var mContext: Context, private val animeList: 
 
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, "Hey! Take a look at this quote.\n\n${animeList[adapterPosition]} \n\n by $anime_character from $anime")
-                        "Hey! Take a look at this quote $animeList[$adapterPosition] \n\n by $anime_character from $anime"
+                        putExtra(Intent.EXTRA_TEXT, "Hey! Take a look at this quote.\n\n${animeList[adapterPosition]} \n\nby $anime_character from $anime")
                         type = "text/plain"
 
                     }
