@@ -3,19 +3,14 @@ package com.example.anime
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.LinkedHashSet
-import kotlin.math.log
 
 class AnimeCharacters : AppCompatActivity() {
 
@@ -41,7 +36,6 @@ class AnimeCharacters : AppCompatActivity() {
         progressBar=findViewById(R.id.progress_circular_character)
         val typeface = ResourcesCompat.getFont(this.applicationContext, R.font.itim)
         searchView.setTypeFace(typeface)
-
 
         anime = intent.getStringExtra("anime").toString()
         textView.text=anime
@@ -99,6 +93,8 @@ class AnimeCharacters : AppCompatActivity() {
                     if (!recyclerView.canScrollVertically(1)) {
                         progressBar.visibility=View.VISIBLE
                         callEnqueue()
+                    }else{
+                        progressBar.visibility=View.GONE
                     }
                 }
 
@@ -138,7 +134,6 @@ class AnimeCharacters : AppCompatActivity() {
                         anime_character_page_list_filtered,
                         anime
                     )
-
                 }
             }
 
