@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class AnimeCharacterAdapter(var mContext: Context, private val animeList:  List<String>,var anime:String ) : RecyclerView.Adapter<AnimeCharacterAdapter.ViewHolder>() {
@@ -21,11 +20,8 @@ class AnimeCharacterAdapter(var mContext: Context, private val animeList:  List<
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         holder.animeTitle.text = animeList[position]
-
     }
-
 
     override fun getItemCount(): Int {
         return animeList.size
