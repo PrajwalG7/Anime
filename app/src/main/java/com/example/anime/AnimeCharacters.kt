@@ -3,6 +3,7 @@ package com.example.anime
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
@@ -22,9 +23,10 @@ class AnimeCharacters : AppCompatActivity() {
     val anime_character_page_list: MutableList<String> = mutableListOf()
     var anime_character_page_list_filtered: MutableList<String> = mutableListOf()
     var anime:String=""
-    var pageNo:Int=0
+    var  pageNo:Int=0
     var loadMoreData:Boolean=true
     lateinit var progressBar:ProgressBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +94,7 @@ class AnimeCharacters : AppCompatActivity() {
                     pageNo++
                     if (!recyclerView.canScrollVertically(1)) {
                         progressBar.visibility=View.VISIBLE
-                        callEnqueue()
+                        callEnqueuePaging()
                     }else{
                         progressBar.visibility=View.GONE
                     }
@@ -134,6 +136,43 @@ class AnimeCharacters : AppCompatActivity() {
                         anime_character_page_list_filtered,
                         anime
                     )
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<AnimeCharacterList>>, t: Throwable) {
+                Toast.makeText(this@AnimeCharacters, "Make sure you have an active Internet Connection!", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+
+    fun callEnqueuePaging(){
+        anime_character_list=anime_api.getCharacter(anime,pageNo)
+
+        anime_character_list.enqueue(object: Callback<MutableList<AnimeCharacterList>>{
+            override fun onResponse(
+                call: Call<MutableList<AnimeCharacterList>>,
+                response: Response<MutableList<AnimeCharacterList>>
+            ) {
+                if(response.body()==null){
+                    loadMoreData=false
+                    progressBar.visibility=View.GONE
+                }else {
+                    val res = response.body()
+                    for (i in res?.indices!!) {
+
+                        anime_character_page_list.add(res[i].character)
+
+                    }
+                    anime_character_page_list_filtered =
+                        LinkedHashSet(anime_character_page_list).toMutableList()
+                    recyclerView.adapter = AnimeCharacterAdapter(
+                        applicationContext,
+                        anime_character_page_list_filtered,
+                        anime
+                    )
+                    recyclerView.scrollToPosition(anime_character_page_list_filtered.size-1)
                 }
             }
 
