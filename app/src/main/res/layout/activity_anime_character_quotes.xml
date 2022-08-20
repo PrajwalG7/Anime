@@ -37,7 +37,7 @@
             android:layout_width="65dp"
             android:layout_height="match_parent"
             android:layout_marginStart="325dp"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_logo"
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_anime_logo" />
 
