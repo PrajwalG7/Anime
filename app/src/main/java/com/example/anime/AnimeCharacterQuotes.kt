@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -24,7 +25,7 @@ class AnimeCharacterQuotes : AppCompatActivity() {
     lateinit var anime_character_list: Call<MutableList<AnimeCharacterList>>
     val anime_character_page_list: MutableList<String> = mutableListOf()
     var anime_character_page_list_filtered: MutableList<String> = mutableListOf()
-
+    lateinit var progressBar:ProgressBar
     var anime:String=""
     var anime_character:String=""
     var pageNo:Int=0
@@ -37,6 +38,7 @@ class AnimeCharacterQuotes : AppCompatActivity() {
         recyclerView=findViewById(R.id.anime_quotes_rv)
         textView=findViewById(R.id.choose_anime_quotes)
         searchView=findViewById(R.id.search_quote)
+        progressBar=findViewById(R.id.progress_circular_quotes)
 
         val typeface = ResourcesCompat.getFont(this.applicationContext, R.font.itim)
         searchView.setTypeFace(typeface)
@@ -96,10 +98,10 @@ class AnimeCharacterQuotes : AppCompatActivity() {
                     pageNo++
 
                     if (!recyclerView.canScrollVertically(1)) {
-                       // progressBar.visibility=View.VISIBLE
-                        callEnqueue()
-
-
+                        progressBar.visibility=View.VISIBLE
+                        callEnqueuePaging()
+                    }else{
+                        progressBar.visibility=View.GONE
                     }
                 }
 
@@ -126,7 +128,7 @@ class AnimeCharacterQuotes : AppCompatActivity() {
             ) {
                 if(response.body()==null){
                    loadMoreData=false
-                   // progressBar.visibility= View.GONE
+                    progressBar.visibility= View.GONE
                 }else {
                     val res = response.body()
                     for (i in res?.indices!!) {
@@ -142,6 +144,44 @@ class AnimeCharacterQuotes : AppCompatActivity() {
                         anime,
                         anime_character
                     )
+
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<AnimeCharacterList>>, t: Throwable) {
+                Toast.makeText(this@AnimeCharacterQuotes, "Make sure you have an active Internet Connection!", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun callEnqueuePaging(){
+        anime_character_list=anime_api.getCharacterQuote(anime_character,pageNo)
+
+        anime_character_list.enqueue(object: Callback<MutableList<AnimeCharacterList>> {
+            override fun onResponse(
+                call: Call<MutableList<AnimeCharacterList>>,
+                response: Response<MutableList<AnimeCharacterList>>
+            ) {
+                if(response.body()==null){
+                    loadMoreData=false
+                    progressBar.visibility= View.GONE
+                }else {
+                    val res = response.body()
+                    for (i in res?.indices!!) {
+
+                        anime_character_page_list.add(res[i].quote)
+
+                    }
+                    anime_character_page_list_filtered =
+                        LinkedHashSet(anime_character_page_list).toMutableList()
+                    recyclerView.adapter = AnimeCharacterQuotesAdapter(
+                        applicationContext,
+                        anime_character_page_list_filtered,
+                        anime,
+                        anime_character
+                    )
+                    recyclerView.scrollToPosition(anime_character_page_list_filtered.size-1)
 
                 }
             }
