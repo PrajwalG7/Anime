@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Anime</string>
     <string name="anime_quotes">Anime Quotes</string>
+    <string name="app_logo">App Logo</string>
+    <string name="anime_characters">Anime Characters</string>
+    <string name="app_slogan">One place to get your favorite Anime Quotes</string>
+    <string name="start_button">Get Started</string>
+    <string name="choose_your_favorite_anime">Choose your favorite anime</string>
+    <string name="quotes">Quotes</string>
+    <string name="share_button">Share</string>
 </resources>
