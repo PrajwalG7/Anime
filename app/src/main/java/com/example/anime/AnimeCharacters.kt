@@ -3,7 +3,6 @@ package com.example.anime
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
